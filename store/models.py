@@ -40,6 +40,12 @@ class Customer(models.Model):
     phone = models.CharField(max_length=255)
     birth_date = models.DateField(null=True)
     memebership = models.CharField(max_length=1, choices=MEMBERSHIP_CHOICES, default=MEMBERSHIP_BRONZE)
+    
+    # class Meta:
+    #     db_table = 'store_customers'
+    #     indexes = [
+    #         models.Index(fields=['last_name', 'first_name'])
+    #     ]
 
 class Order(models.Model):
     PAYMENT_STATUS_PENDING = 'P'
@@ -65,6 +71,7 @@ class OrderItem(models.Model):
 class Address(models.Model):
     street = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
+    # zip_code = models.PositiveSmallIntegerField()
     # customer = models.OneToOneField(Customer, on_delete=models.CASCADE, primary_key=True)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
 
