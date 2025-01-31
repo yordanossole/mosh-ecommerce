@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
+    'store.py',
+    'tag.py',
 ]
 
 MIDDLEWARE = [
@@ -55,7 +57,7 @@ ROOT_URLCONF = 'ecommerce.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [ BASE_DIR / 'myecommerceapp/templates'],
+        'DIRS': [ BASE_DIR / 'store/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
