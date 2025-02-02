@@ -1,5 +1,8 @@
 from django.shortcuts import render
+from store.models import Customer
 
 # Create your views here.
 def index(request):
-    return render(request, "index.html")
+    queryset = Customer.objects.all()
+
+    return render(request, "index.html", { 'customers':list(queryset)})
