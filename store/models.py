@@ -11,6 +11,10 @@ class Collection(models.Model):
     featured_product = models.ForeignKey('Product', on_delete=models.SET_NULL, null=True)
     # we use related_name = '+' to tell Django not to create the reverse relationship
     # or we can set any other name that we want it to be in the referenced table
+    def __str__(self) -> str:
+        return self.title
+    # class Meta:
+    #     ordering = ['title']
 
 class Product(models.Model):
     # sku = models.CharField(max_length=10, primary_key=True)
