@@ -14,11 +14,23 @@ def index(request):
 
     return render(request, "index.html", { 'customers':list(queryset)})
 
-@api_view()
+@api_view(['GET', 'POST'])
 def product_list(request):
-    queryset = Product.objects.select_related('colloection').all()
-    serializer = ProductSerializer(queryset, many=True, context={'request': request})
-    return Response(serializer.data)
+    if request.method =='GET':
+        queryset = Product.objects.select_related('colloection').all()
+        serializer = ProductSerializer(queryset, many=True, context={'request': request})
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        serializer = ProductSerializer(data=request.data)
+        # if serializer.is_valid():
+        #     serializer.validated_data
+        #     return Response('OK')
+        # else:
+        #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        serializer.is_valid(raise_exception=True)
+        serializer.validated_data
+        return Response('OK')
 
 @api_view()
 def product_detail(request, id):
@@ -31,6 +43,9 @@ def product_detail(request, id):
     #     return Response(status=status.HTTP_404_NOT_FOUND)
 
     # another way to do the same thing as above
+    # product = get_object_or_404(Product, pk=id)
+    # serializer = ProductSerializer(product)
+    # return Response(serializer.data)
 
     product = get_object_or_404(Product, pk=id)
     serializer = ProductSerializer(product)
