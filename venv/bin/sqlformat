@@ -1,4 +1,4 @@
-#!/home/yordanos/Downloads/django/moshecommerce/venv/bin/python3
+#!/home/yordanos/Downloads/mosh-ecommerce/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
