@@ -28,7 +28,7 @@ def product_list(request):
         # else:
         #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-        serializer.is_valid(raise_exception=True)
+        serializer.is_valid(raise_exception=True) # Instead of the above if else statement - It automaticaly sends response with status code if there is error
         serializer.validated_data
         return Response('OK')
 

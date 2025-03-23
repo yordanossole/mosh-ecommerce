@@ -47,7 +47,7 @@ class ProductSerializer(serializers .ModelSerializer):
     def calculate_tax(self, product : Product):
         return product.unit_price * Decimal(1.1)
     
-    # overiding validate() method
+    # overiding validate() method - which would be called when "validated_data" accessed 
     # def validate(self, data):
     #     if data['password'] != data['confirm_password']:
     #         return serializers.ValidationError('Passwords do not match')
