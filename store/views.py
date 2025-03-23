@@ -33,7 +33,7 @@ def product_list(request):
         serializer.save() # To save the data back to database using save methods of ModelSerializers
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-@api_view(['GET', 'PUT'])
+@api_view(['GET', 'PUT', 'DELETE'])
 def product_detail(request, id):
     # try:
     #     product = Product.objects.get(pk=id)
@@ -57,6 +57,11 @@ def product_detail(request, id):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
+    elif request.method == 'DELETE':
+        if product.orderitems.count() > 0:
+            return Response({'error': "Product can't be deleted because it has ordered items."}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+        product.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 @api_view()
 def collection_detail(request, pk):
