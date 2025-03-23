@@ -37,10 +37,19 @@ class CollectionSerializer(serializers.ModelSerializer):
         fields = ['id', 'title']
         # fields = '__all__' # to serialize all fields of the model
 
-class ProductSerializer(serializers .ModelSerializer):
+class ProductSerializer(serializers.ModelSerializer):
+    # inventory = serializers.IntegerField(write_only=True) # Deserialize only, not included in response
+    # inventory = serializers.IntegerField(read_only=True)  # Serialize only, not accepted as input
+
     class Meta:
         model = Product
-        fields = ['id', 'title', 'unit_price', 'price_with_tax', 'colloection']
+        fields = ['id', 'title', 'unit_price', 'inventory', 'price_with_tax', 'colloection']
+        # extra_kwargs = {
+        #     'inventory': {'write_only': True} # Deserialize only, not included in response
+        # }
+        # extra_kwargs = {
+        #     'inventory': {'read_only': True}  # Serialize only, not accepted as input
+        # }
         
     price_with_tax = serializers.SerializerMethodField(method_name='calculate_tax')
 
@@ -52,3 +61,16 @@ class ProductSerializer(serializers .ModelSerializer):
     #     if data['password'] != data['confirm_password']:
     #         return serializers.ValidationError('Passwords do not match')
     #     return data
+
+    # The save method invoked to save the object in the view calls one of this methods depending of the validated_data 
+    # # Overide create and update methods to handle saving and updating models by our own
+    # def create(self, validated_data):
+    #     product = Product(**validated_data)
+    #     product.other = 1
+    #     product.save()
+    #     return product
+
+    # def update(self, instance, validated_data):
+    #     instance.unit_price = validated_data.get('unit_price')
+    #     instance.save()
+    #     return instance
