@@ -29,10 +29,11 @@ def product_list(request):
         #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
         serializer.is_valid(raise_exception=True) # Instead of the above if else statement - It automaticaly sends response with status code if there is error
-        serializer.validated_data
-        return Response('OK')
+        # serializer.validated_data # To access validated data
+        serializer.save() # To save the data back to database using save methods of ModelSerializers
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-@api_view()
+@api_view(['GET', 'PUT'])
 def product_detail(request, id):
     # try:
     #     product = Product.objects.get(pk=id)
@@ -48,8 +49,14 @@ def product_detail(request, id):
     # return Response(serializer.data)
 
     product = get_object_or_404(Product, pk=id)
-    serializer = ProductSerializer(product, context={'request': request})
-    return Response(serializer.data)
+    if request.method == 'GET':
+        serializer = ProductSerializer(product, context={'request': request})
+        return Response(serializer.data)
+    elif request.method == 'PUT':
+        serializer = ProductSerializer(product, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
 
 @api_view()
 def collection_detail(request, pk):
