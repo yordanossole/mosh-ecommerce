@@ -48,7 +48,7 @@ def product_detail(request, id):
     # return Response(serializer.data)
 
     product = get_object_or_404(Product, pk=id)
-    serializer = ProductSerializer(product)
+    serializer = ProductSerializer(product, context={'request': request})
     return Response(serializer.data)
 
 @api_view()
