@@ -35,7 +35,9 @@ class CollectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Collection
         fields = ['id', 'title']
+        # fields = ['id', 'title', 'products_count'] 
         # fields = '__all__' # to serialize all fields of the model
+    # products_count = serializers.IntegerField()
 
 class ProductSerializer(serializers.ModelSerializer):
     # inventory = serializers.IntegerField(write_only=True) # Deserialize only, not included in response
