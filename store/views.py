@@ -52,19 +52,19 @@ class CollectionList(APIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
 class CollectionDetail(APIView):
-    def get(self, request, id):
-        collection = get_object_or_404(Collection, pk=id)
+    def get(self, request, pk):
+        collection = get_object_or_404(Collection, pk=pk)
         serializer = CollectionSerializer(collection)
         return Response(serializer.data)
     
-    def put(self, request, id):
-        collection = get_object_or_404(Collection, pk=id)
+    def put(self, request, pk):
+        collection = get_object_or_404(Collection, pk=pk)
         serializer = CollectionSerializer(collection, request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
     
-    def delete(self, request, id):
-        collection = get_object_or_404(Collection, pk=id)
+    def delete(self, request, pk):
+        collection = get_object_or_404(Collection, pk=pk)
         collection.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
